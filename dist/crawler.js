@@ -1,68 +1,40 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+'use strict';
 
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
+var dgram = require('dgram');
 
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+var BOOTSTRAP_NODES = [['router.bittorrent.com', 6881], ['dht.transmissionbt.com', 6881], ['router.utorrent.com', 6881]];
 
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
+var SCCrawler = function () {
+  function SCCrawler() {
+    var bootstrapNodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BOOTSTRAP_NODES;
 
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+    _classCallCheck(this, SCCrawler);
 
+    this.bootstrapNodes = bootstrapNodes;
+    console.log(dgram);
+    this.udp = dgram.createSocket('udp4');
+  }
 
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
+  _createClass(SCCrawler, [{
+    key: 'run',
+    value: function run() {
+      var _this = this;
 
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
+      var port = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 6881;
 
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+      this.udp.on('listening', function () {
+        var address = _this.udp.address();
+        console.log('ScCrawler listening ' + address.address + ':' + address.port);
+      });
+      this.udp.bind(port);
+    }
+  }]);
 
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ function(module, exports) {
+  return SCCrawler;
+}();
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var BOOTSTRAP_NODES = [['router.bittorrent.com', 6881], ['dht.transmissionbt.com', 6881], ['router.utorrent.com', 6881]];
-
-	var SCCrawler = function SCCrawler() {
-	  var bootstrapNodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : BOOTSTRAP_NODES;
-
-	  _classCallCheck(this, SCCrawler);
-
-	  this.bootstrapNodes = bootstrapNodes;
-	};
-
-	exports.default = SCCrawler;
-
-/***/ }
-/******/ ]);
+module.exports = SCCrawler;
