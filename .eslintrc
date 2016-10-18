@@ -4,5 +4,6 @@
     "no-console": "off",
     "dot-notation": "off",
     "class-methods-use-this": "off",
+    "no-else-return": "off",
     },
 }

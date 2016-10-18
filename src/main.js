@@ -85,11 +85,11 @@ class SCCrawler {
       return;
     }
     // console.log(`Crawler got: ${data.y} from ${rinfo.address}:${rinfo.port}`);
-    if (data.y == 'r' && data.r.nodes) {
+    if (data.y.toString() === 'r' && data.r.nodes) {
       this.handleResponse(data);
       return;
     }
-    if (data.y == 'q') {
+    if (data.y.toString() === 'q') {
       this.handleQuery(data, rinfo);
       return;
     }

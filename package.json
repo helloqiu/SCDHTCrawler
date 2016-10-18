@@ -4,7 +4,8 @@
   "description": "Just another dht crawler",
   "main": "index.js",
   "scripts": {
-    "build": "babel src/main.js --out-file dist/crawler.js"
+    "build": "babel src/main.js --out-file dist/crawler.js",
+    "test": "node node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -30,9 +31,12 @@
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1"
+    "eslint-plugin-react": "^6.4.1",
+    "mocha": "^3.1.2"
   },
   "babel": {
-    "presets": ["latest"]
+    "presets": [
+      "latest"
+    ]
   }
 }

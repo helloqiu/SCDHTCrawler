@@ -1,3 +1,4 @@
 dist/*.js
 config/*.js
 example.js
+test/*.js
