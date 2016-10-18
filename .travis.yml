@@ -2,7 +2,7 @@ language: node_js
 node_js:
     - '6'
 before_script:
-    - npm install && npm install -g codecov
+    - npm install -g codecov istanbul
 script:
     - npm run test
     - istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec
