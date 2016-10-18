@@ -17,4 +17,18 @@ describe('SCCrawler', function() {
       assert.equal(crawler.handleAnnouncePeers, handleAnnouncePeers);
     });
   });
+  describe('#RandomNodeId', function() {
+    it('should generate an ID which length is 20', function() {
+      assert.equal(crawler.randomNodeID().length, 20);
+    });
+  });
+  describe('#FakeNodeID', function() {
+    it('should return crawler\'s nodeID if no paramters', function() {
+      assert.equal(crawler.fakeNodeID(), crawler.nodeID);
+    });
+    it('should return the correct nodeID', function() {
+      const nodeID = crawler.randomNodeID().toString();
+      assert.equal(crawler.fakeNodeID(nodeID), nodeID.substring(0, nodeID.length - 1) + crawler.nodeID[crawler.nodeID.length]);
+    });
+  });
 })

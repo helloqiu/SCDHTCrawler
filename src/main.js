@@ -12,7 +12,7 @@ class SCCrawler {
   constructor(handleGetPeers, handleAnnouncePeers, bootstrapNodes = BOOTSTRAP_NODES) {
     this.bootstrapNodes = bootstrapNodes;
     this.udp = dgram.createSocket('udp4');
-    this.nodeID = this.randomNodeId();
+    this.nodeID = this.randomNodeID();
     this.handleGetPeers = handleGetPeers;
     this.handleAnnouncePeers = handleAnnouncePeers;
   }
@@ -40,13 +40,13 @@ class SCCrawler {
       return this.nodeID;
     }
   }
-  randomNodeId(size = 20) {
-    return crypto.createHash('sha1').update(crypto.randomBytes(size)).digest();
+  randomNodeID() {
+    return crypto.createHash('sha1').update(crypto.randomBytes(20)).digest();
   }
   findNode(addr, nodeID, _target) {
     let target = _target;
     if (!target) {
-      target = this.randomNodeId();
+      target = this.randomNodeID();
     }
     this.sendMessage({
       t: 'fn',

@@ -20,7 +20,7 @@ var SCCrawler = function () {
 
     this.bootstrapNodes = bootstrapNodes;
     this.udp = dgram.createSocket('udp4');
-    this.nodeID = this.randomNodeId();
+    this.nodeID = this.randomNodeID();
     this.handleGetPeers = handleGetPeers;
     this.handleAnnouncePeers = handleAnnouncePeers;
   }
@@ -81,18 +81,16 @@ var SCCrawler = function () {
       }
     }
   }, {
-    key: 'randomNodeId',
-    value: function randomNodeId() {
-      var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 20;
-
-      return crypto.createHash('sha1').update(crypto.randomBytes(size)).digest();
+    key: 'randomNodeID',
+    value: function randomNodeID() {
+      return crypto.createHash('sha1').update(crypto.randomBytes(20)).digest();
     }
   }, {
     key: 'findNode',
     value: function findNode(addr, nodeID, _target) {
       var target = _target;
       if (!target) {
-        target = this.randomNodeId();
+        target = this.randomNodeID();
       }
       this.sendMessage({
         t: 'fn',
@@ -137,11 +135,11 @@ var SCCrawler = function () {
         return;
       }
       // console.log(`Crawler got: ${data.y} from ${rinfo.address}:${rinfo.port}`);
-      if (data.y == 'r' && data.r.nodes) {
+      if (data.y.toString() === 'r' && data.r.nodes) {
         this.handleResponse(data);
         return;
       }
-      if (data.y == 'q') {
+      if (data.y.toString() === 'q') {
         this.handleQuery(data, rinfo);
         return;
       }
